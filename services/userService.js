@@ -68,5 +68,14 @@ module.exports = {
             console.log(err);
             res.status(500).send(err);
         }
+    },
+
+    deleteByUsername: async (req, res) => {
+        try {
+            await UserModel.deleteOne({username: req.params.username});
+            res.json({success: true});
+        } catch (err){
+            res.status(500).json(err);
+        }
     }
 }

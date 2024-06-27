@@ -10,7 +10,9 @@ const jwt = require('jsonwebtoken');
 module.exports = {
 
   requireLogin: (req, res, next) => {
-    jwt.verify(req.headers.authorization, process.env.SECRET_KEY, (err, decoded) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
       if (err) {
         return res.status(401).json({ message: 'invalid_session' })
       }
@@ -29,7 +31,9 @@ module.exports = {
     }
 
     return (req, res, next) => {
-      jwt.verify(req.headers.authorization, config.SECRET_KEY, (err, decoded) => {
+      const authHeader = req.headers['authorization'];
+      const token = authHeader && authHeader.split(' ')[1];
+      jwt.verify(token, config.SECRET_KEY, (err, decoded) => {
         if (err) {
           return res.status(401).json({ message: 'invalid_session' })
         }
