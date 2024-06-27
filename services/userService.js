@@ -1,6 +1,7 @@
 const UserModel = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const accountService = require('./accountService');
 
 module.exports = {
     register: async (req, res) => {
@@ -73,6 +74,7 @@ module.exports = {
     deleteByUsername: async (req, res) => {
         try {
             await UserModel.deleteOne({username: req.params.username});
+            await accountService.deleteByUser(req.params.username);
             res.json({success: true});
         } catch (err){
             res.status(500).json(err);

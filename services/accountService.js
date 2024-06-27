@@ -74,6 +74,14 @@ module.exports = {
         }
     },
 
+    deleteByUser: async (user) => {
+        try {
+            await AccountModel.deleteMany({user: user});
+        } catch (err) {
+            
+        }
+    },
+
     updateById: async (req, res) => {
         const username = getUsernameFromToken(req);
         if(!username){
